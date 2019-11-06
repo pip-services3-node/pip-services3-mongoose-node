@@ -4,6 +4,7 @@ This component library is a part of the [Pip.Services](https://github.com/pip-se
 It contains the following MongoDB components: 
  
  * [MongooseConnectionResolver](https://pip-services3-node.github.io/pip-services3-mongoose-node/classes/connect.mongooseconnectionresolver.html)
+ * [MongooseConnection](https://pip-services3-node.github.io/pip-services3-mongoose-node/classes/persistence.mongooseconnection.html)
  * [MongoosePersistence](https://pip-services3-node.github.io/pip-services3-mongoose-node/classes/persistence.mongoosepersistence.html)
  * [IdentifiableMongoosePersistence](https://pip-services3-node.github.io/pip-services3-mongoose-node/classes/persistence.identifiablemongoosepersistence.html)
 

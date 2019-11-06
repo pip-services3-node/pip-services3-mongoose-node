@@ -1,17 +1,21 @@
 /** @module persistence */
 import { IReferenceable } from 'pip-services3-commons-node';
+import { IUnreferenceable } from 'pip-services3-commons-node';
 import { IReferences } from 'pip-services3-commons-node';
 import { IConfigurable } from 'pip-services3-commons-node';
 import { IOpenable } from 'pip-services3-commons-node';
 import { ICleanable } from 'pip-services3-commons-node';
 import { ConfigParams } from 'pip-services3-commons-node';
 import { ConnectionException } from 'pip-services3-commons-node';
+import { InvalidStateException } from 'pip-services3-commons-node';
+import { ConfigException } from 'pip-services3-commons-node';
+import { DependencyResolver } from 'pip-services3-commons-node';
 import { CompositeLogger } from 'pip-services3-components-node';
 
 import { Schema } from "mongoose";
-import { createConnection } from "mongoose";
 
 import { MongooseConnectionResolver } from '../connect/MongooseConnectionResolver';
+import { MongooseConnection } from './MongooseConnection';
 
 /**
  * Abstract persistence component that stores data in MongoDB
@@ -90,10 +94,11 @@ import { MongooseConnectionResolver } from '../connect/MongooseConnectionResolve
  *         });
  *     });
  */
-export class MongoosePersistence implements IReferenceable, IConfigurable, IOpenable, ICleanable {
+export class MongoosePersistence implements IReferenceable, IUnreferenceable, IConfigurable, IOpenable, ICleanable {
 
-    private _defaultConfig: ConfigParams = ConfigParams.fromTuples(
+    private static _defaultConfig: ConfigParams = ConfigParams.fromTuples(
         "collection", null,
+        "dependencies.connection", "*:connection:mongoose:*:1.0",
 
         // connections.*
         // credential.*
@@ -106,23 +111,24 @@ export class MongoosePersistence implements IReferenceable, IConfigurable, IOpen
         "options.debug", true
     );
 
+    private _config: ConfigParams;
+    private _references: IReferences;
+    private _opened: boolean;
+    private _localConnection: boolean;
+
+    /**
+     * The dependency resolver.
+     */
+    protected _dependencyResolver: DependencyResolver = new DependencyResolver(MongoosePersistence._defaultConfig);
     /** 
      * The logger.
      */
     protected _logger: CompositeLogger = new CompositeLogger();
-    /**
-     * The connection resolver.
-     */
-    protected _connectionResolver: MongooseConnectionResolver = new MongooseConnectionResolver();
-    /**
-     * The configuration options.
-     */
-    protected _options: ConfigParams = new ConfigParams();
 
     /**
-     * The MongoDB connection object.
+     * The Mongoose connection component.
      */
-    protected _connection: any;
+    protected _connection: MongooseConnection;
     /**
      * The MongoDB database name.
      */
@@ -147,14 +153,8 @@ export class MongoosePersistence implements IReferenceable, IConfigurable, IOpen
      * @param schema        (optional) a Mongoose schema. 
      */
     public constructor(collection?: string, schema?: Schema) {
-        this._connection = createConnection();
         this._collection = collection;
-        this._schema = schema;
-        
-        if (collection != null && schema != null) {
-            schema.set('collection', collection);
-            this._model = this._connection.model(collection, schema);
-        }
+        this._schema = schema;        
     }
 
     /**
@@ -163,18 +163,12 @@ export class MongoosePersistence implements IReferenceable, IConfigurable, IOpen
      * @param config    configuration parameters to be set.
      */
     public configure(config: ConfigParams): void {
-        config = config.setDefaults(this._defaultConfig);
+        config = config.setDefaults(MongoosePersistence._defaultConfig);
+        this._config = config;
 
-        this._connectionResolver.configure(config);
+        this._dependencyResolver.configure(config);
 
-        let collection = config.getAsStringWithDefault('collection', this._collection);
-        if (collection != this._collection && this._schema != null) {
-            this._collection = collection;
-            this._schema.set('collection', collection);
-            this._model = this._model = this._connection.model(collection, this._schema);
-        }
-
-        this._options = this._options.override(config.getSection("options"));
+        this._collection = config.getAsStringWithDefault('collection', this._collection);
     }
 
     /**
@@ -183,8 +177,37 @@ export class MongoosePersistence implements IReferenceable, IConfigurable, IOpen
 	 * @param references 	references to locate the component dependencies. 
      */
     public setReferences(references: IReferences): void {
+        this._references = references;
         this._logger.setReferences(references);
-        this._connectionResolver.setReferences(references);
+
+        // Get connection
+        this._collection = this._dependencyResolver.getOneOptional('connection');
+        // Or create a local one
+        if (this._collection == null) {
+            this._connection = this.createConnection();
+            this._localConnection = true;
+        } else {
+            this._localConnection = false;
+        }
+    }
+
+    /**
+	 * Unsets (clears) previously set references to dependent components. 
+     */
+    public unsetReferences(): void {
+        this._connection = null;
+    }
+
+    private createConnection(): MongooseConnection {
+        let connection = new MongooseConnection();
+        
+        if (this._config)
+            connection.configure(this._config);
+        
+        if (this._references)
+            connection.setReferences(this._references);
+            
+        return connection;
     }
 
     /** 
@@ -215,39 +238,7 @@ export class MongoosePersistence implements IReferenceable, IConfigurable, IOpen
 	 * @returns true if the component has been opened and false otherwise.
      */
     public isOpen(): boolean {
-        return this._connection.readyState == 1;
-    }
-
-    private composeSettings(): any {
-        let maxPoolSize = this._options.getAsNullableInteger("max_pool_size");
-        let keepAlive = this._options.getAsNullableInteger("keep_alive");
-        let connectTimeoutMS = this._options.getAsNullableInteger("connect_timeout");
-        let socketTimeoutMS = this._options.getAsNullableInteger("socket_timeout");
-        let autoReconnect = this._options.getAsNullableBoolean("auto_reconnect");
-        let reconnectInterval = this._options.getAsNullableInteger("reconnect_interval");
-        let debug = this._options.getAsNullableBoolean("debug");
-
-        let ssl = this._options.getAsNullableBoolean("ssl");
-        let replicaSet = this._options.getAsNullableString("replica_set");
-        let authSource = this._options.getAsNullableString("auth_source");
-
-        let settings: any = {
-            poolSize: maxPoolSize,
-            keepAlive: keepAlive,
-            autoReconnect: autoReconnect,
-            reconnectInterval: reconnectInterval,
-            connectTimeoutMS: connectTimeoutMS,
-            socketTimeoutMS: socketTimeoutMS
-        };
-
-        if (ssl != null)
-            settings.ssl = ssl;
-        if (replicaSet != null)
-            settings.replicaSet = replicaSet;
-        if (authSource != null)
-            settings.authSource = authSource;
-
-        return settings;
+        return this._opened;
     }
 
     /**
@@ -257,39 +248,63 @@ export class MongoosePersistence implements IReferenceable, IConfigurable, IOpen
      * @param callback 			callback function that receives error or null no errors occured.
      */
     public open(correlationId: string, callback?: (err: any) => void): void {
-        this._connectionResolver.resolve(correlationId, (err, uri) => {
+    	if (this._opened) {
+            callback(null);
+            return;
+        }
+
+        if (this._collection == null) {
+            let err = new ConfigException(correlationId, 'NO_COLLECTION', 'MongoDB collection is not set');
+            if (callback) callback(err);
+            return;
+        }
+
+        if (this._schema == null) {
+            let err = new InvalidStateException(correlationId, 'NO_SCHEMA', 'Mongoose schema is not set');
+            if (callback) callback(err);
+            return;
+        }
+
+        if (this._connection == null) {
+            this._connection = this.createConnection();
+            this._localConnection = true;
+        }
+
+        let openCurl = (err) => {
+            if (err == null && this._connection == null) {
+                err = new InvalidStateException(correlationId, 'NO_CONNECTION', 'Mongoose connection is missing');
+            }
+
+            if (err == null && !this._connection.isOpen()) {
+                err = new ConnectionException(correlationId, "CONNECT_FAILED", "Mongoose connection is not opened");
+            }
+
+            this._opened = false;
+
             if (err) {
                 if (callback) callback(err);
-                else this._logger.error(correlationId, err, 'Failed to resolve Mongoose connection');
-                return;
+            } else {
+                this._opened = true;
+
+                this._database = this._connection.getDatabaseName();
+                let connection = this._connection.getConnection();
+
+                if (this._collection != null && this._schema != null) {
+                    this._schema.set('collection', this._collection);
+                    this._model = connection.model(this._collection, this._schema);
+                }
+
+                this._logger.debug(correlationId, "Connected to mongodb database %s, collection %s", this._database, this._collection);
+
+                if (callback) callback(err);
             }
+        };
 
-            this._logger.debug(correlationId, "Connecting to mongoose");
-
-            try {
-                let settings = this.composeSettings();
-
-                // For forward compatibility
-                settings['useNewUrlParser'] = true;
-                settings['useFindAndModify'] = false;
-                settings['useCreateIndex'] = true;
-
-                this._connection.openUri(uri, settings, (err) => {
-                    if (err) {
-                        err = new ConnectionException(correlationId, "CONNECT_FAILED", "Connection to mongodb failed").withCause(err);
-                    } else {
-                        this._database = this._database || this._connection.db.databaseName;
-                        this._logger.debug(correlationId, "Connected to mongodb database %s, collection %s", this._database, this._collection);
-                    }
-
-                    if (callback) callback(err);
-                });
-            } catch (ex) {
-                let err = new ConnectionException(correlationId, "CONNECT_FAILED", "Connection to mongodb failed").withCause(ex);
-
-                callback(err);
-            }
-        });
+        if (this._localConnection) {
+            this._connection.open(correlationId, openCurl);
+        } else {
+            openCurl(null);
+        }
     }
 
     /**
@@ -299,14 +314,28 @@ export class MongoosePersistence implements IReferenceable, IConfigurable, IOpen
      * @param callback 			callback function that receives error or null no errors occured.
      */
     public close(correlationId: string, callback?: (err: any) => void): void {
-        this._connection.close((err) => {
-            if (err)
-                err = new ConnectionException(correlationId, 'DISCONNECT_FAILED', 'Disconnect from mongodb failed: ') .withCause(err);
-            else
-                this._logger.debug(correlationId, "Disconnected from mongodb database %s", this._database);
+    	if (!this._opened) {
+            callback(null);
+            return;
+        }
+
+        if (this._connection == null) {
+            callback(new InvalidStateException(correlationId, 'NO_CONNECTION', 'MongoDb connection is missing'));
+            return;
+        }
+        
+        let closeCurl = (err) => {
+            this._opened = false;
+            this._model = null;
 
             if (callback) callback(err);
-        });
+        }
+
+        if (this._localConnection) {
+            this._connection.close(correlationId, closeCurl);
+        } else {
+            closeCurl(null);
+        }
     }
 
     /**

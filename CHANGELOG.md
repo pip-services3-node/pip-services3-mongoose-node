@@ -1,5 +1,10 @@
 # MongoDB components for Pip.Services in Node.js Changelog
 
+## <a name="3.1.0"></a> 3.1.0 (2019-11-06) 
+
+### Features
+* Added MongooseConnection
+
 ## <a name="3.0.0"></a> 3.0.0 (2018-08-21) 
 
 ### Breaking Changes
