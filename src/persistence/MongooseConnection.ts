@@ -139,7 +139,7 @@ export class MongooseConnection implements IReferenceable, IConfigurable, IOpena
         let settings: any = {
             poolSize: maxPoolSize,
             keepAlive: keepAlive,
-            autoReconnect: autoReconnect,
+            //autoReconnect: autoReconnect,
             reconnectInterval: reconnectInterval,
             connectTimeoutMS: connectTimeoutMS,
             socketTimeoutMS: socketTimeoutMS
@@ -178,6 +178,7 @@ export class MongooseConnection implements IReferenceable, IConfigurable, IOpena
                 settings['useNewUrlParser'] = true;
                 settings['useFindAndModify'] = false;
                 settings['useCreateIndex'] = true;
+                settings['useUnifiedTopology'] = true;
 
                 this._connection.openUri(uri, settings, (err) => {
                     if (err) {

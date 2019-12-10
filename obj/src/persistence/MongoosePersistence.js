@@ -123,9 +123,10 @@ class MongoosePersistence {
         this._references = references;
         this._logger.setReferences(references);
         // Get connection
-        this._collection = this._dependencyResolver.getOneOptional('connection');
+        this._dependencyResolver.setReferences(references);
+        this._connection = this._dependencyResolver.getOneOptional('connection');
         // Or create a local one
-        if (this._collection == null) {
+        if (this._connection == null) {
             this._connection = this.createConnection();
             this._localConnection = true;
         }

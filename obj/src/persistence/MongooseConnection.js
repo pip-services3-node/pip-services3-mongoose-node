@@ -106,7 +106,7 @@ class MongooseConnection {
         let settings = {
             poolSize: maxPoolSize,
             keepAlive: keepAlive,
-            autoReconnect: autoReconnect,
+            //autoReconnect: autoReconnect,
             reconnectInterval: reconnectInterval,
             connectTimeoutMS: connectTimeoutMS,
             socketTimeoutMS: socketTimeoutMS
@@ -141,6 +141,7 @@ class MongooseConnection {
                 settings['useNewUrlParser'] = true;
                 settings['useFindAndModify'] = false;
                 settings['useCreateIndex'] = true;
+                settings['useUnifiedTopology'] = true;
                 this._connection.openUri(uri, settings, (err) => {
                     if (err) {
                         err = new pip_services3_commons_node_2.ConnectionException(correlationId, "CONNECT_FAILED", "Connection to mongodb failed").withCause(err);
