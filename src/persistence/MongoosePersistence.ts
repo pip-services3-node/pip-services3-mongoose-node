@@ -260,11 +260,12 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
             return;
         }
 
-        if (this._schema == null) {
-            let err = new InvalidStateException(correlationId, 'NO_SCHEMA', 'Mongoose schema is not set');
-            if (callback) callback(err);
-            return;
-        }
+        // Todo: temporary disabled
+        // if (this._schema == null) {
+        //     let err = new InvalidStateException(correlationId, 'NO_SCHEMA', 'Mongoose schema is not set');
+        //     if (callback) callback(err);
+        //     return;
+        // }
 
         if (this._connection == null) {
             this._connection = this.createConnection();
