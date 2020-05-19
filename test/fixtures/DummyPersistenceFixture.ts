@@ -112,6 +112,13 @@ export class DummyPersistenceFixture {
 
                     callback(err);
                 });
+            },
+            (callback) => {
+                this._persistence.getCountByFilter(null, null, (err, count) => {
+                    assert.equal(count, 1);
+
+                    callback(err);
+                });
             }
         ], callback);
     }

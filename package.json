@@ -1,8 +1,8 @@
 {
     "name": "pip-services3-mongoose-node",
-    "version": "3.1.2",
+    "version": "3.2.0",
     "author": "Conceptual Vision Consulting LLC",
-    "description": "MongoDB components for Pip.Services in Node.js",
+    "description": "Mongoose (mongodb) components for Pip.Services in Node.js",
     "contributors": [
         {
             "name": "Sergey Seroukhov",

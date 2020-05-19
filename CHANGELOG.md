@@ -5,6 +5,11 @@
 ### Features
 * Added MongooseConnection
 
+## <a name="3.2.0"></a> 3.2.0 (2020-05-18) 
+
+### Features
+* Added getCountByFilter method
+
 ## <a name="3.0.0"></a> 3.0.0 (2018-08-21) 
 
 ### Breaking Changes
