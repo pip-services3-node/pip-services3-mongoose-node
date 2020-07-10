@@ -1,4 +1,10 @@
 /** @module persistence */
+
+/** @hidden */
+let _ = require('lodash');
+/** @hidden */
+let async = require('async');
+
 import { IReferenceable } from 'pip-services3-commons-node';
 import { IUnreferenceable } from 'pip-services3-commons-node';
 import { IReferences } from 'pip-services3-commons-node';
@@ -11,6 +17,8 @@ import { InvalidStateException } from 'pip-services3-commons-node';
 import { ConfigException } from 'pip-services3-commons-node';
 import { DependencyResolver } from 'pip-services3-commons-node';
 import { CompositeLogger } from 'pip-services3-components-node';
+import { PagingParams } from 'pip-services3-commons-node';
+import { DataPage } from 'pip-services3-commons-node';
 
 import { Schema } from "mongoose";
 
@@ -94,7 +102,7 @@ import { MongooseConnection } from './MongooseConnection';
  *         });
  *     });
  */
-export class MongoosePersistence implements IReferenceable, IUnreferenceable, IConfigurable, IOpenable, ICleanable {
+export class MongoosePersistence<T> implements IReferenceable, IUnreferenceable, IConfigurable, IOpenable, ICleanable {
 
     private static _defaultConfig: ConfigParams = ConfigParams.fromTuples(
         "collection", null,
@@ -115,6 +123,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
     private _references: IReferences;
     private _opened: boolean;
     private _localConnection: boolean;
+    protected _maxPageSize: number = 100;
 
     /**
      * The dependency resolver.
@@ -154,7 +163,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
      */
     public constructor(collection?: string, schema?: Schema) {
         this._collection = collection;
-        this._schema = schema;        
+        this._schema = schema;
     }
 
     /**
@@ -201,13 +210,13 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
 
     private createConnection(): MongooseConnection {
         let connection = new MongooseConnection();
-        
+
         if (this._config)
             connection.configure(this._config);
-        
+
         if (this._references)
             connection.setReferences(this._references);
-            
+
         return connection;
     }
 
@@ -221,7 +230,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
         if (value && value.toJSON)
             value = value.toJSON();
         return value;
-    }    
+    }
 
     /** 
      * Convert object value from public to internal format.
@@ -231,7 +240,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
      */
     protected convertFromPublic(value: any): any {
         return value;
-    }    
+    }
 
     /**
 	 * Checks if the component is opened.
@@ -249,7 +258,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
      * @param callback 			callback function that receives error or null no errors occured.
      */
     public open(correlationId: string, callback?: (err: any) => void): void {
-    	if (this._opened) {
+        if (this._opened) {
             callback(null);
             return;
         }
@@ -316,7 +325,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
      * @param callback 			callback function that receives error or null no errors occured.
      */
     public close(correlationId: string, callback?: (err: any) => void): void {
-    	if (!this._opened) {
+        if (!this._opened) {
             callback(null);
             return;
         }
@@ -325,7 +334,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
             callback(new InvalidStateException(correlationId, 'NO_CONNECTION', 'MongoDb connection is missing'));
             return;
         }
-        
+
         let closeCurl = (err) => {
             this._opened = false;
             this._model = null;
@@ -361,7 +370,7 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
         //         err = new ConnectionException(correlationId, "CONNECT_FAILED", "Connection to mongodb failed")
         //             .withCause(err);
         //     }
-            
+
         //     if (callback) callback(err);
         // });
 
@@ -370,7 +379,202 @@ export class MongoosePersistence implements IReferenceable, IUnreferenceable, IC
                 err = new ConnectionException(correlationId, "CONNECT_FAILED", "Connection to mongodb failed")
                     .withCause(err);
             }
-            
+
+            if (callback) callback(err);
+        });
+    }
+
+    /**
+     * Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
+     * 
+     * This method shall be called by a public getPageByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     * 
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter JSON object
+     * @param paging            (optional) paging parameters
+     * @param sort              (optional) sorting JSON object
+     * @param select            (optional) projection JSON object
+     * @param callback          callback function that receives a data page or error.
+     */
+    protected getPageByFilter(correlationId: string, filter: any, paging: PagingParams,
+        sort: any, select: any, callback: (err: any, items: DataPage<T>) => void): void {
+        // Adjust max item count based on configuration
+        paging = paging || new PagingParams();
+        let skip = paging.getSkip(-1);
+        let take = paging.getTake(this._maxPageSize);
+        let pagingEnabled = paging.total;
+
+        // Configure statement
+        let statement = this._model.find(filter);
+
+        if (skip >= 0) statement.skip(skip);
+        statement.limit(take);
+        if (sort && !_.isEmpty(sort)) statement.sort(sort);
+        if (select && !_.isEmpty(select)) statement.select(select);
+
+        statement.exec((err, items) => {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+
+            if (items != null)
+                this._logger.trace(correlationId, "Retrieved %d from %s", items.length, this._collection);
+
+            items = _.map(items, this.convertToPublic);
+
+            if (pagingEnabled) {
+                this._model.countDocuments(filter, (err, count) => {
+                    if (err) {
+                        callback(err, null);
+                        return;
+                    }
+
+                    let page = new DataPage<T>(items, count);
+                    callback(null, page);
+                });
+            } else {
+                let page = new DataPage<T>(items);
+                callback(null, page);
+            }
+        });
+    }
+
+    /**
+     * Gets a number of data items retrieved by a given filter.
+     * 
+     * This method shall be called by a public getCountByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     * 
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter JSON object
+     * @param callback          callback function that receives a data page or error.
+     */
+    protected getCountByFilter(correlationId: string, filter: any,
+        callback: (err: any, count: number) => void): void {
+
+        // Configure statement
+        let statement = this._model.find(filter);
+
+        this._model.countDocuments(filter, (err, count) => {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+
+            if (count != null)
+                this._logger.trace(correlationId, "Counted %d items in %s", count, this._collection);
+
+            callback(null, count);
+        });
+    }
+
+    /**
+     * Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
+     * 
+     * This method shall be called by a public getListByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     * 
+     * @param correlationId    (optional) transaction id to trace execution through call chain.
+     * @param filter           (optional) a filter JSON object
+     * @param paging           (optional) paging parameters
+     * @param sort             (optional) sorting JSON object
+     * @param select           (optional) projection JSON object
+     * @param callback         callback function that receives a data list or error.
+     */
+    protected getListByFilter(correlationId: string, filter: any, sort: any, select: any,
+        callback: (err: any, items: T[]) => void): void {
+
+        // Configure statement
+        let statement = this._model.find(filter);
+
+        if (sort && !_.isEmpty(sort)) statement.sort(sort);
+        if (select && !_.isEmpty(select)) statement.select(select);
+
+        statement.exec((err, items) => {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+
+            if (items != null)
+                this._logger.trace(correlationId, "Retrieved %d from %s", items.length, this._collection);
+
+            items = _.map(items, this.convertToPublic);
+            callback(null, items);
+        });
+    }
+
+    /**
+     * Gets a random item from items that match to a given filter.
+     * 
+     * This method shall be called by a public getOneRandom method from child class that
+     * receives FilterParams and converts them into a filter function.
+     * 
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter JSON object
+     * @param callback          callback function that receives a random item or error.
+     */
+    protected getOneRandom(correlationId: string, filter: any, callback: (err: any, item: T) => void): void {
+        this._model.countDocuments(filter, (err, count) => {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+
+            let pos = _.random(0, count - 1);
+
+            this._model.find(filter)
+                .skip(pos >= 0 ? pos : 0)
+                .limit(1)
+                .exec((err, items) => {
+                    let item = (items != null && items.length > 0) ? items[0] : null;
+
+                    item = this.convertToPublic(item);
+                    callback(err, item);
+                });
+        });
+    }
+
+    /**
+    * Creates a data item.
+    * 
+    * @param correlation_id    (optional) transaction id to trace execution through call chain.
+    * @param item              an item to be created.
+    * @param callback          (optional) callback function that receives created item or error.
+    */
+    public create(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
+        if (item == null) {
+            callback(null, null);
+            return;
+        }
+    
+        let newItem = this.convertFromPublic(item);
+        this._model.create(newItem, (err, newItem) => {
+            if (!err)
+                this._logger.trace(correlationId, "Created in %s with id = %s", this._collection, newItem._id);
+
+            newItem = this.convertToPublic(newItem);
+            callback(err, newItem);
+        });
+    }
+
+    /**
+    * Deletes data items that match to a given filter.
+    * 
+    * This method shall be called by a public deleteByFilter method from child class that
+    * receives FilterParams and converts them into a filter function.
+    * 
+    * @param correlationId     (optional) transaction id to trace execution through call chain.
+    * @param filter            (optional) a filter JSON object.
+    * @param callback          (optional) callback function that receives error or null for success.
+    */
+    public deleteByFilter(correlationId: string, filter: any, callback?: (err: any) => void): void {
+        this._model.deleteMany(filter, (err, count) => {
+            if (!err)
+                this._logger.trace(correlationId, "Deleted %d items from %s", count, this._collection);
+
             if (callback) callback(err);
         });
     }

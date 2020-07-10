@@ -7,8 +7,7 @@ let async = require('async');
 import { Schema } from "mongoose";
 
 import { ConfigParams } from 'pip-services3-commons-node';
-import { PagingParams } from 'pip-services3-commons-node';
-import { DataPage } from 'pip-services3-commons-node';
+
 import { AnyValueMap } from 'pip-services3-commons-node';
 import { IIdentifiable } from 'pip-services3-commons-node';
 import { IdGenerator } from 'pip-services3-commons-node';
@@ -113,10 +112,10 @@ import { MongoosePersistence } from './MongoosePersistence';
  *         )
  *     });
  */
-export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> extends MongoosePersistence
+export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> extends MongoosePersistence<T>
     implements IWriter<T, K>, IGetter<T, K>, ISetter<T> {
     //TODO (note for SS): is this needed? It's in MongoosePersistence as well...
-    protected _maxPageSize: number = 100;
+
 
     /**
      * Creates a new instance of the persistence component.
@@ -140,7 +139,7 @@ export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> exte
      */
     public configure(config: ConfigParams): void {
         super.configure(config);
-        
+
         this._maxPageSize = config.getAsIntegerWithDefault("options.max_page_size", this._maxPageSize);
     }
 
@@ -152,128 +151,6 @@ export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> exte
      */
     protected convertFromPublicPartial(value: any): any {
         return this.convertFromPublic(value);
-    }    
-    
-    /**
-     * Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
-     * 
-     * This method shall be called by a public getPageByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object
-     * @param paging            (optional) paging parameters
-     * @param sort              (optional) sorting JSON object
-     * @param select            (optional) projection JSON object
-     * @param callback          callback function that receives a data page or error.
-     */
-    protected getPageByFilter(correlationId: string, filter: any, paging: PagingParams, 
-        sort: any, select: any, callback: (err: any, items: DataPage<T>) => void): void {
-        // Adjust max item count based on configuration
-        paging = paging || new PagingParams();
-        let skip = paging.getSkip(-1);
-        let take = paging.getTake(this._maxPageSize);
-        let pagingEnabled = paging.total;
-
-        // Configure statement
-        let statement = this._model.find(filter);
-
-        if (skip >= 0) statement.skip(skip);
-        statement.limit(take);
-        if (sort && !_.isEmpty(sort)) statement.sort(sort);
-        if (select && !_.isEmpty(select)) statement.select(select);
-
-        statement.exec((err, items) => {
-            if (err) {
-                callback(err, null);
-                return;
-            }
-
-            if (items != null)
-                this._logger.trace(correlationId, "Retrieved %d from %s", items.length, this._collection);
-
-            items = _.map(items, this.convertToPublic);
-
-            if (pagingEnabled) {
-                this._model.countDocuments(filter, (err, count) => {
-                    if (err) {
-                        callback(err, null);
-                        return;
-                    }
-                        
-                    let page = new DataPage<T>(items, count);
-                    callback(null, page);
-                });
-            } else {
-                let page = new DataPage<T>(items);
-                callback(null, page);
-            }
-        });
-    }
-
-    /**
-     * Gets a number of data items retrieved by a given filter.
-     * 
-     * This method shall be called by a public getCountByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object
-     * @param callback          callback function that receives a data page or error.
-     */
-    protected getCountByFilter(correlationId: string, filter: any, 
-        callback: (err: any, count: number) => void): void {
-
-        // Configure statement
-        let statement = this._model.find(filter);
-
-        this._model.countDocuments(filter, (err, count) => {
-            if (err) {
-                callback(err, null);
-                return;
-            }
-
-            if (count != null)
-                this._logger.trace(correlationId, "Counted %d items in %s", count, this._collection);
-            
-            callback(null, count);
-        });
-    }
-
-    /**
-     * Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
-     * 
-     * This method shall be called by a public getListByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     * 
-     * @param correlationId    (optional) transaction id to trace execution through call chain.
-     * @param filter           (optional) a filter JSON object
-     * @param paging           (optional) paging parameters
-     * @param sort             (optional) sorting JSON object
-     * @param select           (optional) projection JSON object
-     * @param callback         callback function that receives a data list or error.
-     */
-    protected getListByFilter(correlationId: string, filter: any, sort: any, select: any, 
-        callback: (err: any, items: T[]) => void): void {
-        
-        // Configure statement
-        let statement = this._model.find(filter);
-
-        if (sort && !_.isEmpty(sort)) statement.sort(sort);
-        if (select && !_.isEmpty(select)) statement.select(select);
-
-        statement.exec((err, items) => {
-            if (err) {
-                callback(err, null);
-                return;
-            }
-
-            if (items != null)
-                this._logger.trace(correlationId, "Retrieved %d from %s", items.length, this._collection);
-                
-            items = _.map(items, this.convertToPublic);
-            callback(null, items);
-        });
     }
 
     /**
@@ -308,36 +185,6 @@ export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> exte
         });
     }
 
-    /**
-     * Gets a random item from items that match to a given filter.
-     * 
-     * This method shall be called by a public getOneRandom method from child class that
-     * receives FilterParams and converts them into a filter function.
-     * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object
-     * @param callback          callback function that receives a random item or error.
-     */
-    protected getOneRandom(correlationId: string, filter: any, callback: (err: any, item: T) => void): void {
-        this._model.countDocuments(filter, (err, count) => {
-            if (err) {
-                callback(err, null);
-                return;
-            }
-
-            let pos = _.random(0, count - 1);
-
-            this._model.find(filter)
-                .skip(pos >= 0 ? pos : 0)
-                .limit(1)
-                .exec((err, items) => {
-                    let item = (items != null && items.length > 0) ? items[0] : null;
-                    
-                    item = this.convertToPublic(item);
-                    callback(err, item);
-                });
-        });
-    }
 
     /**
      * Creates a data item.
@@ -357,13 +204,7 @@ export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> exte
         newItem._id = item.id || IdGenerator.nextLong();
         newItem = this.convertFromPublic(newItem);
 
-        this._model.create(newItem, (err, newItem) => {
-            if (!err)
-                this._logger.trace(correlationId, "Created in %s with id = %s", this._collection, newItem._id);
-
-            newItem = this.convertToPublic(newItem);
-            callback(err, newItem);
-        });
+       super.create(correlationId, newItem, callback);
     }
 
     /**
@@ -393,11 +234,11 @@ export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> exte
             new: true,
             upsert: true
         };
-        
+
         this._model.findOneAndUpdate(filter, newItem, options, (err, newItem) => {
             if (!err)
                 this._logger.trace(correlationId, "Set in %s with id = %s", this._collection, item.id);
-           
+
             if (callback) {
                 newItem = this.convertToPublic(newItem);
                 callback(err, newItem);
@@ -445,7 +286,7 @@ export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> exte
      */
     public updatePartially(correlationId: string, id: K, data: AnyValueMap,
         callback?: (err: any, item: T) => void): void {
-            
+
         if (data == null || id == null) {
             if (callback) callback(null, null);
             return;
@@ -491,24 +332,6 @@ export class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> exte
         });
     }
 
-    /**
-     * Deletes data items that match to a given filter.
-     * 
-     * This method shall be called by a public deleteByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object.
-     * @param callback          (optional) callback function that receives error or null for success.
-     */
-    public deleteByFilter(correlationId: string, filter: any, callback?: (err: any) => void): void {
-        this._model.deleteMany(filter, (err, count) => {
-            if (!err)
-                this._logger.trace(correlationId, "Deleted %d items from %s", count, this._collection);
-
-            if (callback) callback(err);
-        });
-    }
 
     /**
      * Deletes multiple data items by their unique ids.

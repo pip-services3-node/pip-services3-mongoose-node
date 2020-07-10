@@ -1,14 +1,20 @@
 # MongoDB components for Pip.Services in Node.js Changelog
 
-## <a name="3.1.0"></a> 3.1.0 (2019-11-06) 
+## <a name="3.3.0"></a> 3.3.0 (2020-06-10) 
 
 ### Features
-* Added MongooseConnection
+* Moved some CRUD operations from IdentifiableMongoDbPersistence to MongoDbPersistence
 
 ## <a name="3.2.0"></a> 3.2.0 (2020-05-18) 
 
 ### Features
 * Added getCountByFilter method
+
+## <a name="3.1.0"></a> 3.1.0 (2019-11-06) 
+
+### Features
+* Added MongooseConnection
+
 
 ## <a name="3.0.0"></a> 3.0.0 (2018-08-21) 
 

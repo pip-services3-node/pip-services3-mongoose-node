@@ -1,7 +1,5 @@
 import { Schema } from "mongoose";
 import { ConfigParams } from 'pip-services3-commons-node';
-import { PagingParams } from 'pip-services3-commons-node';
-import { DataPage } from 'pip-services3-commons-node';
 import { AnyValueMap } from 'pip-services3-commons-node';
 import { IIdentifiable } from 'pip-services3-commons-node';
 import { IWriter } from 'pip-services3-data-node';
@@ -102,8 +100,7 @@ import { MongoosePersistence } from './MongoosePersistence';
  *         )
  *     });
  */
-export declare class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> extends MongoosePersistence implements IWriter<T, K>, IGetter<T, K>, ISetter<T> {
-    protected _maxPageSize: number;
+export declare class IdentifiableMongoosePersistence<T extends IIdentifiable<K>, K> extends MongoosePersistence<T> implements IWriter<T, K>, IGetter<T, K>, ISetter<T> {
     /**
      * Creates a new instance of the persistence component.
      *
@@ -125,45 +122,6 @@ export declare class IdentifiableMongoosePersistence<T extends IIdentifiable<K>,
      */
     protected convertFromPublicPartial(value: any): any;
     /**
-     * Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
-     *
-     * This method shall be called by a public getPageByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     *
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object
-     * @param paging            (optional) paging parameters
-     * @param sort              (optional) sorting JSON object
-     * @param select            (optional) projection JSON object
-     * @param callback          callback function that receives a data page or error.
-     */
-    protected getPageByFilter(correlationId: string, filter: any, paging: PagingParams, sort: any, select: any, callback: (err: any, items: DataPage<T>) => void): void;
-    /**
-     * Gets a number of data items retrieved by a given filter.
-     *
-     * This method shall be called by a public getCountByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     *
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object
-     * @param callback          callback function that receives a data page or error.
-     */
-    protected getCountByFilter(correlationId: string, filter: any, callback: (err: any, count: number) => void): void;
-    /**
-     * Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
-     *
-     * This method shall be called by a public getListByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     *
-     * @param correlationId    (optional) transaction id to trace execution through call chain.
-     * @param filter           (optional) a filter JSON object
-     * @param paging           (optional) paging parameters
-     * @param sort             (optional) sorting JSON object
-     * @param select           (optional) projection JSON object
-     * @param callback         callback function that receives a data list or error.
-     */
-    protected getListByFilter(correlationId: string, filter: any, sort: any, select: any, callback: (err: any, items: T[]) => void): void;
-    /**
      * Gets a list of data items retrieved by given unique ids.
      *
      * @param correlationId     (optional) transaction id to trace execution through call chain.
@@ -179,17 +137,6 @@ export declare class IdentifiableMongoosePersistence<T extends IIdentifiable<K>,
      * @param callback          callback function that receives data item or error.
      */
     getOneById(correlationId: string, id: K, callback: (err: any, item: T) => void): void;
-    /**
-     * Gets a random item from items that match to a given filter.
-     *
-     * This method shall be called by a public getOneRandom method from child class that
-     * receives FilterParams and converts them into a filter function.
-     *
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object
-     * @param callback          callback function that receives a random item or error.
-     */
-    protected getOneRandom(correlationId: string, filter: any, callback: (err: any, item: T) => void): void;
     /**
      * Creates a data item.
      *
@@ -232,17 +179,6 @@ export declare class IdentifiableMongoosePersistence<T extends IIdentifiable<K>,
      * @param callback          (optional) callback function that receives deleted item or error.
      */
     deleteById(correlationId: string, id: K, callback?: (err: any, item: T) => void): void;
-    /**
-     * Deletes data items that match to a given filter.
-     *
-     * This method shall be called by a public deleteByFilter method from child class that
-     * receives FilterParams and converts them into a filter function.
-     *
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            (optional) a filter JSON object.
-     * @param callback          (optional) callback function that receives error or null for success.
-     */
-    deleteByFilter(correlationId: string, filter: any, callback?: (err: any) => void): void;
     /**
      * Deletes multiple data items by their unique ids.
      *
