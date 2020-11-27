@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>pip-services-mongoose-node</title>
+	<title>pip-services3-mongoose-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">pip-services-mongoose-node</a>
+					<a href="index.html" class="title">pip-services3-mongoose-node</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> pip-services-mongoose-node</h1>
+			<h1> pip-services3-mongoose-node</h1>
 		</div>
 	</div>
 </header>
@@ -62,22 +62,53 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="-img-src-https-github-com-pip-services-pip-services-raw-master-design-logo-png-alt-pip-services-logo-style-max-width-30-br-pip-services-mongoose-components-for-node-js"><img src="https://github.com/pip-services/pip-services/raw/master/design/Logo.png" alt="Pip.Services Logo" style="max-width:30%"> <br/> Pip.Services MongoDB components for Node.js</h1>
-				<p>This component library is a part of the <a href="https://github.com/pip-services/pip-services">Pip.Services</a> project.
-				It contains the following MongoDB components: </p>
+				<h1 id="-img-src-https-github-com-pip-services-pip-services-raw-master-design-logo-png-alt-pip-services-logo-style-max-width-30-br-pip-services-mongodb-components-for-node-js"><img src="https://github.com/pip-services/pip-services/raw/master/design/Logo.png" alt="Pip.Services Logo" style="max-width:30%"> <br/> Pip.Services MongoDB components for Node.js</h1>
+				<p>This module is a part of the <a href="http://pipservices.org">Pip.Services</a> polyglot microservices toolkit.</p>
+				<p>The Mongoose module simplifies working with Mongo databases using ODM and contains everything you need to get started with MongoDB.</p>
+				<p>This module contains the following packages:</p>
 				<ul>
-					<li><a href="https://pip-services3-node.github.io/pip-services3-mongoose-node/classes/connect.mongooseconnectionresolver.html">MongooseConnectionResolver</a></li>
-					<li><a href="https://pip-services3-node.github.io/pip-services3-mongoose-node/classes/persistence.mongoosepersistence.html">MongoosePersistence</a></li>
-					<li><a href="https://pip-services3-node.github.io/pip-services3-mongoose-node/classes/persistence.identifiablemongoosepersistence.html">IdentifiableMongoosePersistence</a></li>
+					<li><strong>Build</strong> - contains a factory for creating MongoDB persistence components.</li>
+					<li><strong>Connect</strong> - instruments for configuring connections to the database. The component receives a set of configuration parameters and uses them to generate all necessary database connection parameters.</li>
+					<li><strong>Persistence</strong> - abstract classes for working with the database that can be used for connecting to collections and performing basic CRUD operations.</li>
 				</ul>
-				<p>Quick Links:</p>
+				<p><a name="links"></a> Quick links:</p>
 				<ul>
-					<li><a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/master/doc/Downloads.md">Downloads</a></li>
+					<li><a href="https://www.pipservices.org/recipies/configuration">Configuration</a></li>
 					<li><a href="https://pip-services3-node.github.io/pip-services3-mongoose-node/globals.html">API Reference</a></li>
-					<li><a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/master/doc/Development.md">Building and Testing</a></li>
-					<li><a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/master/doc/Development.md/#contrib">Contributing</a></li>
+					<li><a href="CHANGELOG.md">Change Log</a></li>
+					<li><a href="https://www.pipservices.org/community/help">Get Help</a></li>
+					<li><a href="https://www.pipservices.org/community/contribute">Contribute</a></li>
 				</ul>
-				<h2 id="acknowledgements">Acknowledgements</h2>
+				<h2 id="use">Use</h2>
+				<p>Install the NPM package as</p>
+				<pre><code class="lang-bash">npm install pip-services3-mongoose-node --save
+</code></pre>
+				<h2 id="develop">Develop</h2>
+				<p>For development you shall install the following prerequisites:</p>
+				<ul>
+					<li>Node.js 8+</li>
+					<li>Visual Studio Code or another IDE of your choice</li>
+					<li>Docker</li>
+					<li>Typescript</li>
+				</ul>
+				<p>Install dependencies:</p>
+				<pre><code class="lang-bash">npm install
+</code></pre>
+				<p>Compile the code:</p>
+				<pre><code class="lang-bash">tsc
+</code></pre>
+				<p>Run automated tests:</p>
+				<pre><code class="lang-bash">npm <span class="hljs-built_in">test</span>
+</code></pre>
+				<p>Generate API documentation:</p>
+				<pre><code class="lang-bash">./docgen.ps1
+</code></pre>
+				<p>Before committing changes run dockerized build and test as:</p>
+				<pre><code class="lang-bash">./build.ps1
+./test.ps1
+./clear.ps1
+</code></pre>
+				<h2 id="contacts">Contacts</h2>
 				<p>The library is created and maintained by <strong>Sergey Seroukhov</strong>.</p>
 				<p>The documentation is written by <strong>Mark Makarychev</strong>.</p>
 			</div>
@@ -87,6 +118,9 @@
 				<ul>
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/build.html">build</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/connect.html">connect</a>
