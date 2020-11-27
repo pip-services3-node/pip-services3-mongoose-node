@@ -9,7 +9,7 @@ import { MongoosePersistence } from './MongoosePersistence';
 /**
  * Abstract persistence component that stores data in MongoDB
  * and implements a number of CRUD operations over data items with unique ids.
- * The data items must implement IIdentifiable interface.
+ * The data items must implement [[https://pip-services3-node.github.io/pip-services3-commons-node/interfaces/data.iidentifiable.html IIdentifiable]] interface.
  *
  * In basic scenarios child classes shall only override [[getPageByFilter]],
  * [[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
