@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MongoosePersistence | pip-services-mongoose-node</title>
+	<title>MongoosePersistence | pip-services3-mongoose-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">pip-services-mongoose-node</a>
+					<a href="../index.html" class="title">pip-services3-mongoose-node</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -60,7 +60,7 @@
 					<a href="persistence.mongoosepersistence.html">MongoosePersistence</a>
 				</li>
 			</ul>
-			<h1>Class MongoosePersistence</h1>
+			<h1>Class MongoosePersistence&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -81,14 +81,14 @@
 					<ul>
 						<li>collection:                  (optional) MongoDB collection name</li>
 						<li>connection(s):<ul>
-								<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
+								<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
 								<li>host:                      host name or IP address</li>
 								<li>port:                      port number (default: 27017)</li>
 								<li>uri:                       resource URI or connection string with all parameters in it</li>
 							</ul>
 						</li>
 						<li>credential(s):<ul>
-								<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
+								<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
 								<li>username:                  (optional) user name</li>
 								<li>password:                  (optional) user password</li>
 							</ul>
@@ -96,21 +96,26 @@
 						<li>options:<ul>
 								<li>max_pool_size:             (optional) maximum connection pool size (default: 2)</li>
 								<li>keep_alive:                (optional) enable connection keep alive (default: true)</li>
-								<li>connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)</li>
+								<li>connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)</li>
+								<li>socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)</li>
 								<li>auto_reconnect:            (optional) enable auto reconnection (default: true)</li>
+								<li>reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)</li>
 								<li>max_page_size:             (optional) maximum page size (default: 100)</li>
+								<li>replica_set:               (optional) name of replica set</li>
+								<li>ssl:                       (optional) enable SSL connection (default: false)</li>
+								<li>auth_source:               (optional) authentication source</li>
 								<li>debug:                     (optional) enable debug output (default: false).</li>
 							</ul>
 						</li>
 					</ul>
 					<h3 id="references">References</h3>
 					<ul>
-						<li><code>*:logger:*:*:1.0</code>           (optional) <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages</li>
-						<li><code>*:discovery:*:*:1.0</code>        (optional) <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
+						<li><code>*:logger:*:*:1.0</code>           (optional) <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages</li>
+						<li><code>*:discovery:*:*:1.0</code>        (optional) <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
 						<li><code>*:credential-store:*:*:1.0</code> (optional) Credential stores to resolve credentials</li>
 					</ul>
 					<h3 id="example">Example</h3>
-					<pre><code><span class="hljs-keyword">class</span> MyMongoosePersistence <span class="hljs-keyword">extends</span> MongoosePersistence&lt;MyData&gt; {
+					<pre><code><span class="hljs-keyword">class</span> MyMongoosePersistence <span class="hljs-keyword">extends</span> MongooosePersistence&lt;MyData&gt; {
 
   <span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
       base(<span class="hljs-string">"mydata"</span>, <span class="hljs-keyword">new</span> MyDataMongooseSchema());
@@ -147,6 +152,14 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 </code></pre>
 				</div>
 			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -163,10 +176,11 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">IReferenceable</span></li>
-					<li><span class="tsd-signature-type">IConfigurable</span></li>
-					<li><span class="tsd-signature-type">IOpenable</span></li>
-					<li><span class="tsd-signature-type">ICleanable</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -184,11 +198,11 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_collection" class="tsd-kind-icon">_collection</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_connection" class="tsd-kind-icon">_connection</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_database" class="tsd-kind-icon">_database</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_dependencyresolver" class="tsd-kind-icon">_dependency<wbr>Resolver</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_logger" class="tsd-kind-icon">_logger</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_maxpagesize" class="tsd-kind-icon">_max<wbr>Page<wbr>Size</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_model" class="tsd-kind-icon">_model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_options" class="tsd-kind-icon">_options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#_schema" class="tsd-kind-icon">_schema</a></li>
 							</ul>
 						</section>
@@ -200,9 +214,16 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.mongoosepersistence.html#configure" class="tsd-kind-icon">configure</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#convertfrompublic" class="tsd-kind-icon">convert<wbr>From<wbr>Public</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#converttopublic" class="tsd-kind-icon">convert<wbr>ToPublic</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.mongoosepersistence.html#create" class="tsd-kind-icon">create</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.mongoosepersistence.html#deletebyfilter" class="tsd-kind-icon">delete<wbr>ByFilter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#getcountbyfilter" class="tsd-kind-icon">get<wbr>Count<wbr>ByFilter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#getlistbyfilter" class="tsd-kind-icon">get<wbr>List<wbr>ByFilter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#getonerandom" class="tsd-kind-icon">get<wbr>One<wbr>Random</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.mongoosepersistence.html#getpagebyfilter" class="tsd-kind-icon">get<wbr>Page<wbr>ByFilter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.mongoosepersistence.html#isopen" class="tsd-kind-icon">is<wbr>Open</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.mongoosepersistence.html#open" class="tsd-kind-icon">open</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.mongoosepersistence.html#setreferences" class="tsd-kind-icon">set<wbr>References</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.mongoosepersistence.html#unsetreferences" class="tsd-kind-icon">unset<wbr>References</a></li>
 							</ul>
 						</section>
 					</div>
@@ -214,13 +235,13 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Mongo<wbr>DbPersistence<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, schema<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="persistence.mongoosepersistence.html" class="tsd-signature-type">MongoosePersistence</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Mongoose<wbr>Persistence<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, schema<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="persistence.mongoosepersistence.html" class="tsd-signature-type">MongoosePersistence</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L137">persistence/MongoosePersistence.ts:137</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:156</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -260,42 +281,27 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_collection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L129">persistence/MongoosePersistence.ts:129</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:148</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The MongoDB colleciton object.</p>
+							<p>The MongoDB collection object.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="_connection" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _connection</h3>
-					<div class="tsd-signature tsd-kind-icon">_connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<div class="tsd-signature tsd-kind-icon">_connection<span class="tsd-signature-symbol">:</span> <a href="persistence.mongooseconnection.html" class="tsd-signature-type">MongooseConnection</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L121">persistence/MongoosePersistence.ts:121</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:140</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The MongoDB connection object.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="_connectionresolver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _connection<wbr>Resolver</h3>
-					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="connect.mongooseconnectionresolver.html" class="tsd-signature-type">MongooseConnectionResolver</a><span class="tsd-signature-symbol"> =&nbsp;new MongooseConnectionResolver()</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L112">persistence/MongoosePersistence.ts:112</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The connection resolver.</p>
+							<p>The Mongoose connection component.</p>
 						</div>
 					</div>
 				</section>
@@ -305,7 +311,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_database<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L125">persistence/MongoosePersistence.ts:125</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:144</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -315,12 +321,27 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_dependencyresolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _dependency<wbr>Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">_dependency<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DependencyResolver</span><span class="tsd-signature-symbol"> =&nbsp;new DependencyResolver(MongoosePersistence._defaultConfig)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in persistence/MongoosePersistence.ts:131</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The dependency resolver.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="_logger" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _logger</h3>
 					<div class="tsd-signature tsd-kind-icon">_logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositeLogger</span><span class="tsd-signature-symbol"> =&nbsp;new CompositeLogger()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L108">persistence/MongoosePersistence.ts:108</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:135</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -330,12 +351,22 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_maxpagesize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _max<wbr>Page<wbr>Size</h3>
+					<div class="tsd-signature tsd-kind-icon">_max<wbr>Page<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;100</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in persistence/MongoosePersistence.ts:126</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="_model" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _model</h3>
 					<div class="tsd-signature tsd-kind-icon">_model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L133">persistence/MongoosePersistence.ts:133</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:152</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -345,27 +376,12 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="_options" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _options</h3>
-					<div class="tsd-signature tsd-kind-icon">_options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConfigParams</span><span class="tsd-signature-symbol"> =&nbsp;new ConfigParams()</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L116">persistence/MongoosePersistence.ts:116</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The configuration options.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="_schema" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _schema</h3>
 					<div class="tsd-signature tsd-kind-icon">_schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schema</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L137">persistence/MongoosePersistence.ts:137</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:156</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -387,7 +403,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L305">persistence/MongoosePersistence.ts:305</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:358</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -442,7 +458,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L288">persistence/MongoosePersistence.ts:288</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:327</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -497,7 +513,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L161">persistence/MongoosePersistence.ts:161</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:174</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -528,7 +544,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L204">persistence/MongoosePersistence.ts:204</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:241</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -560,7 +576,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L192">persistence/MongoosePersistence.ts:192</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:229</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -583,6 +599,424 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="create" class="tsd-anchor"></a>
+					<h3>create</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:547</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a data item.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>item: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>an item to be created.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) callback function that receives created item or error.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>item: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deletebyfilter" class="tsd-anchor"></a>
+					<h3>delete<wbr>ByFilter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:573</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Deletes data items that match to a given filter.</p>
+								</div>
+								<p>This method shall be called by a public deleteByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) transaction id to trace execution through call chain.</p>
+									</div>
+								</li>
+								<li>
+									<h5>filter: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) a filter JSON object.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) callback function that receives error or null for success.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="getcountbyfilter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Count<wbr>ByFilter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Count<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:454</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets a number of data items retrieved by a given filter.</p>
+								</div>
+								<p>This method shall be called by a public getCountByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) transaction id to trace execution through call chain.</p>
+									</div>
+								</li>
+								<li>
+									<h5>filter: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) a filter JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback function that receives a data page or error.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, count<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>count: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="getlistbyfilter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>List<wbr>ByFilter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>List<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, sort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, select<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:486</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets a list of data items retrieved by a given filter and sorted according to sort parameters.</p>
+								</div>
+								<p>This method shall be called by a public getListByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) transaction id to trace execution through call chain.</p>
+									</div>
+								</li>
+								<li>
+									<h5>filter: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) a filter JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>sort: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) sorting JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>select: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) projection JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback function that receives a data list or error.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, items<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>items: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="getonerandom" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>One<wbr>Random</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>One<wbr>Random<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:519</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets a random item from items that match to a given filter.</p>
+								</div>
+								<p>This method shall be called by a public getOneRandom method from child class that
+								receives FilterParams and converts them into a filter function.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) transaction id to trace execution through call chain.</p>
+									</div>
+								</li>
+								<li>
+									<h5>filter: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) a filter JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback function that receives a random item or error.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>item: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="getpagebyfilter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Page<wbr>ByFilter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Page<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, paging<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PagingParams</span>, sort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, select<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:400</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets a page of data items retrieved by a given filter and sorted according to sort parameters.</p>
+								</div>
+								<p>This method shall be called by a public getPageByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) transaction id to trace execution through call chain.</p>
+									</div>
+								</li>
+								<li>
+									<h5>filter: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) a filter JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>paging: <span class="tsd-signature-type">PagingParams</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) paging parameters</p>
+									</div>
+								</li>
+								<li>
+									<h5>sort: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) sorting JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>select: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) projection JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback function that receives a data page or error.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, items<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DataPage</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>items: <span class="tsd-signature-type">DataPage</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="isopen" class="tsd-anchor"></a>
 					<h3>is<wbr>Open</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -592,7 +1026,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L213">persistence/MongoosePersistence.ts:213</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:250</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -615,7 +1049,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L247">persistence/MongoosePersistence.ts:247</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:260</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -670,7 +1104,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L181">persistence/MongoosePersistence.ts:181</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:188</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -691,6 +1125,28 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="unsetreferences" class="tsd-anchor"></a>
+					<h3>unset<wbr>References</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">unset<wbr>References<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:207</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unsets (clears) previously set references to dependent components.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -698,6 +1154,9 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 				<ul>
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/build.html">build</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/connect.html">connect</a>
@@ -713,12 +1172,15 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="persistence.identifiablemongoosepersistence.html" class="tsd-kind-icon">Identifiable<wbr>Mongo<wbr>DbPersistence</a>
+						<a href="persistence.identifiablemongoosepersistence.html" class="tsd-kind-icon">Identifiable<wbr>Mongoose<wbr>Persistence</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="persistence.mongooseconnection.html" class="tsd-kind-icon">Mongoose<wbr>Connection</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="persistence.mongoosepersistence.html" class="tsd-kind-icon">Mongo<wbr>DbPersistence</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="persistence.mongoosepersistence.html" class="tsd-kind-icon">Mongoose<wbr>Persistence</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="persistence.mongoosepersistence.html#constructor" class="tsd-kind-icon">constructor</a>
@@ -730,19 +1192,19 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 								<a href="persistence.mongoosepersistence.html#_connection" class="tsd-kind-icon">_connection</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="persistence.mongoosepersistence.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a>
+								<a href="persistence.mongoosepersistence.html#_database" class="tsd-kind-icon">_database</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="persistence.mongoosepersistence.html#_database" class="tsd-kind-icon">_database</a>
+								<a href="persistence.mongoosepersistence.html#_dependencyresolver" class="tsd-kind-icon">_dependency<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="persistence.mongoosepersistence.html#_logger" class="tsd-kind-icon">_logger</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="persistence.mongoosepersistence.html#_model" class="tsd-kind-icon">_model</a>
+								<a href="persistence.mongoosepersistence.html#_maxpagesize" class="tsd-kind-icon">_max<wbr>Page<wbr>Size</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="persistence.mongoosepersistence.html#_options" class="tsd-kind-icon">_options</a>
+								<a href="persistence.mongoosepersistence.html#_model" class="tsd-kind-icon">_model</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="persistence.mongoosepersistence.html#_schema" class="tsd-kind-icon">_schema</a>
@@ -763,6 +1225,24 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 								<a href="persistence.mongoosepersistence.html#converttopublic" class="tsd-kind-icon">convert<wbr>ToPublic</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="persistence.mongoosepersistence.html#create" class="tsd-kind-icon">create</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="persistence.mongoosepersistence.html#deletebyfilter" class="tsd-kind-icon">delete<wbr>ByFilter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="persistence.mongoosepersistence.html#getcountbyfilter" class="tsd-kind-icon">get<wbr>Count<wbr>ByFilter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="persistence.mongoosepersistence.html#getlistbyfilter" class="tsd-kind-icon">get<wbr>List<wbr>ByFilter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="persistence.mongoosepersistence.html#getonerandom" class="tsd-kind-icon">get<wbr>One<wbr>Random</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="persistence.mongoosepersistence.html#getpagebyfilter" class="tsd-kind-icon">get<wbr>Page<wbr>ByFilter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistence.mongoosepersistence.html#isopen" class="tsd-kind-icon">is<wbr>Open</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -770,6 +1250,9 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistence.mongoosepersistence.html#setreferences" class="tsd-kind-icon">set<wbr>References</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="persistence.mongoosepersistence.html#unsetreferences" class="tsd-kind-icon">unset<wbr>References</a>
 							</li>
 						</ul>
 					</li>

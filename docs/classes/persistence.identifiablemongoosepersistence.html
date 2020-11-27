@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IdentifiableMongoosePersistence | pip-services-mongoose-node</title>
+	<title>IdentifiableMongoosePersistence | pip-services3-mongoose-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">pip-services-mongoose-node</a>
+					<a href="../index.html" class="title">pip-services3-mongoose-node</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -83,14 +83,14 @@
 					<ul>
 						<li>collection:                  (optional) MongoDB collection name</li>
 						<li>connection(s):<ul>
-								<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
+								<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
 								<li>host:                      host name or IP address</li>
 								<li>port:                      port number (default: 27017)</li>
 								<li>uri:                       resource URI or connection string with all parameters in it</li>
 							</ul>
 						</li>
 						<li>credential(s):<ul>
-								<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
+								<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
 								<li>username:                  (optional) user name</li>
 								<li>password:                  (optional) user password</li>
 							</ul>
@@ -98,17 +98,24 @@
 						<li>options:<ul>
 								<li>max_pool_size:             (optional) maximum connection pool size (default: 2)</li>
 								<li>keep_alive:                (optional) enable connection keep alive (default: true)</li>
-								<li>connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)</li>
+								<li>connect_timeout:           (optional) connection timeout in milliseconds (default: 5000)</li>
+								<li>socket_timeout:            (optional) socket timeout in milliseconds (default: 360000)</li>
 								<li>auto_reconnect:            (optional) enable auto reconnection (default: true)</li>
+								<li>reconnect_interval:        (optional) reconnection interval in milliseconds (default: 1000)</li>
 								<li>max_page_size:             (optional) maximum page size (default: 100)</li>
+								<li>replica_set:               (optional) name of replica set</li>
+								<li>ssl:                       (optional) enable SSL connection (default: false)</li>
+								<li>auth_source:               (optional) authentication source</li>
+								<li>auth_user:                 (optional) authentication user name</li>
+								<li>auth_password:             (optional) authentication user password</li>
 								<li>debug:                     (optional) enable debug output (default: false).</li>
 							</ul>
 						</li>
 					</ul>
 					<h3 id="references">References</h3>
 					<ul>
-						<li><code>*:logger:*:*:1.0</code>           (optional) <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages components to pass log messages</li>
-						<li><code>*:discovery:*:*:1.0</code>        (optional) <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
+						<li><code>*:logger:*:*:1.0</code>           (optional) <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages components to pass log messages</li>
+						<li><code>*:discovery:*:*:1.0</code>        (optional) <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
 						<li><code>*:credential-store:*:*:1.0</code> (optional) Credential stores to resolve credentials</li>
 					</ul>
 					<h3 id="example">Example</h3>
@@ -176,7 +183,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="persistence.mongoosepersistence.html" class="tsd-signature-type">MongoosePersistence</a>
+						<a href="persistence.mongoosepersistence.html" class="tsd-signature-type">MongoosePersistence</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">IdentifiableMongoosePersistence</span>
@@ -188,13 +195,14 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">IReferenceable</span></li>
-					<li><span class="tsd-signature-type">IConfigurable</span></li>
-					<li><span class="tsd-signature-type">IOpenable</span></li>
-					<li><span class="tsd-signature-type">ICleanable</span></li>
-					<li><span class="tsd-signature-type">IWriter</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li><span class="tsd-signature-type">IGetter</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li><span class="tsd-signature-type">ISetter</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -207,17 +215,16 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="persistence.identifiablemongoosepersistence.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private-protected">
+						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_collection" class="tsd-kind-icon">_collection</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_connection" class="tsd-kind-icon">_connection</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_database" class="tsd-kind-icon">_database</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_dependencyresolver" class="tsd-kind-icon">_dependency<wbr>Resolver</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_logger" class="tsd-kind-icon">_logger</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_maxpagesize" class="tsd-kind-icon">_max<wbr>Page<wbr>Size</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_maxpagesize" class="tsd-kind-icon">_max<wbr>Page<wbr>Size</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_model" class="tsd-kind-icon">_model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_options" class="tsd-kind-icon">_options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#_schema" class="tsd-kind-icon">_schema</a></li>
 							</ul>
 						</section>
@@ -230,19 +237,21 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#convertfrompublic" class="tsd-kind-icon">convert<wbr>From<wbr>Public</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#convertfrompublicpartial" class="tsd-kind-icon">convert<wbr>From<wbr>Public<wbr>Partial</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#converttopublic" class="tsd-kind-icon">convert<wbr>ToPublic</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#create" class="tsd-kind-icon">create</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#deletebyfilter" class="tsd-kind-icon">delete<wbr>ByFilter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="persistence.identifiablemongoosepersistence.html#create" class="tsd-kind-icon">create</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="persistence.identifiablemongoosepersistence.html#deletebyfilter" class="tsd-kind-icon">delete<wbr>ByFilter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#deletebyid" class="tsd-kind-icon">delete<wbr>ById</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#deletebyids" class="tsd-kind-icon">delete<wbr>ByIds</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#getlistbyfilter" class="tsd-kind-icon">get<wbr>List<wbr>ByFilter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#getcountbyfilter" class="tsd-kind-icon">get<wbr>Count<wbr>ByFilter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#getlistbyfilter" class="tsd-kind-icon">get<wbr>List<wbr>ByFilter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#getlistbyids" class="tsd-kind-icon">get<wbr>List<wbr>ByIds</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#getonebyid" class="tsd-kind-icon">get<wbr>One<wbr>ById</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#getonerandom" class="tsd-kind-icon">get<wbr>One<wbr>Random</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#getpagebyfilter" class="tsd-kind-icon">get<wbr>Page<wbr>ByFilter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#getonerandom" class="tsd-kind-icon">get<wbr>One<wbr>Random</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="persistence.identifiablemongoosepersistence.html#getpagebyfilter" class="tsd-kind-icon">get<wbr>Page<wbr>ByFilter</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="persistence.identifiablemongoosepersistence.html#isopen" class="tsd-kind-icon">is<wbr>Open</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="persistence.identifiablemongoosepersistence.html#open" class="tsd-kind-icon">open</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#set" class="tsd-kind-icon">set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="persistence.identifiablemongoosepersistence.html#setreferences" class="tsd-kind-icon">set<wbr>References</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="persistence.identifiablemongoosepersistence.html#unsetreferences" class="tsd-kind-icon">unset<wbr>References</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#update" class="tsd-kind-icon">update</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistence.identifiablemongoosepersistence.html#updatepartially" class="tsd-kind-icon">update<wbr>Partially</a></li>
 							</ul>
@@ -256,14 +265,14 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Identifiable<wbr>Mongo<wbr>DbPersistence<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, schema<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="persistence.identifiablemongoosepersistence.html" class="tsd-signature-type">IdentifiableMongoosePersistence</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Identifiable<wbr>Mongoose<wbr>Persistence<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, schema<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="persistence.identifiablemongoosepersistence.html" class="tsd-signature-type">IdentifiableMongoosePersistence</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L112">persistence/IdentifiableMongoosePersistence.ts:112</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:116</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -295,7 +304,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="_collection" class="tsd-anchor"></a>
@@ -304,44 +313,28 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_collection">_collection</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L129">persistence/MongoosePersistence.ts:129</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:148</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The MongoDB colleciton object.</p>
+							<p>The MongoDB collection object.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="_connection" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _connection</h3>
-					<div class="tsd-signature tsd-kind-icon">_connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<div class="tsd-signature tsd-kind-icon">_connection<span class="tsd-signature-symbol">:</span> <a href="persistence.mongooseconnection.html" class="tsd-signature-type">MongooseConnection</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_connection">_connection</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L121">persistence/MongoosePersistence.ts:121</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:140</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The MongoDB connection object.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-					<a name="_connectionresolver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _connection<wbr>Resolver</h3>
-					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="connect.mongooseconnectionresolver.html" class="tsd-signature-type">MongooseConnectionResolver</a><span class="tsd-signature-symbol"> =&nbsp;new MongooseConnectionResolver()</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_connectionresolver">_connectionResolver</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L112">persistence/MongoosePersistence.ts:112</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The connection resolver.</p>
+							<p>The Mongoose connection component.</p>
 						</div>
 					</div>
 				</section>
@@ -352,12 +345,28 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_database">_database</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L125">persistence/MongoosePersistence.ts:125</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:144</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The MongoDB database name.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="_dependencyresolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _dependency<wbr>Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">_dependency<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DependencyResolver</span><span class="tsd-signature-symbol"> =&nbsp;new DependencyResolver(MongoosePersistence._defaultConfig)</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_dependencyresolver">_dependencyResolver</a></p>
+						<ul>
+							<li>Defined in persistence/MongoosePersistence.ts:131</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The dependency resolver.</p>
 						</div>
 					</div>
 				</section>
@@ -368,7 +377,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_logger">_logger</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L108">persistence/MongoosePersistence.ts:108</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:135</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -377,13 +386,14 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="_maxpagesize" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _max<wbr>Page<wbr>Size</h3>
 					<div class="tsd-signature tsd-kind-icon">_max<wbr>Page<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;100</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_maxpagesize">_maxPageSize</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L112">persistence/IdentifiableMongoosePersistence.ts:112</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:126</li>
 						</ul>
 					</aside>
 				</section>
@@ -394,28 +404,12 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_model">_model</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L133">persistence/MongoosePersistence.ts:133</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:152</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The Mongoose model object.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-					<a name="_options" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _options</h3>
-					<div class="tsd-signature tsd-kind-icon">_options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConfigParams</span><span class="tsd-signature-symbol"> =&nbsp;new ConfigParams()</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_options">_options</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L116">persistence/MongoosePersistence.ts:116</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The configuration options.</p>
 						</div>
 					</div>
 				</section>
@@ -426,7 +420,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#_schema">_schema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L137">persistence/MongoosePersistence.ts:137</a></li>
+							<li>Defined in persistence/MongoosePersistence.ts:156</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -449,7 +443,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L305">persistence/MongoosePersistence.ts:305</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:358</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -505,7 +499,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#close">close</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L288">persistence/MongoosePersistence.ts:288</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:327</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -561,7 +555,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#configure">configure</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L134">persistence/IdentifiableMongoosePersistence.ts:134</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:140</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -593,7 +587,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#convertfrompublic">convertFromPublic</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L204">persistence/MongoosePersistence.ts:204</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:241</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -625,7 +619,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L146">persistence/IdentifiableMongoosePersistence.ts:146</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:152</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -658,7 +652,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#converttopublic">convertToPublic</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L192">persistence/MongoosePersistence.ts:192</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:229</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -680,17 +674,18 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="create" class="tsd-anchor"></a>
 					<h3>create</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#create">create</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L313">persistence/IdentifiableMongoosePersistence.ts:313</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:196</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -741,17 +736,18 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="deletebyfilter" class="tsd-anchor"></a>
 					<h3>delete<wbr>ByFilter</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">delete<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#deletebyfilter">deleteByFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L468">persistence/IdentifiableMongoosePersistence.ts:468</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:573</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -814,7 +810,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L446">persistence/IdentifiableMongoosePersistence.ts:446</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:323</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -875,7 +871,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L484">persistence/IdentifiableMongoosePersistence.ts:484</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:343</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -926,17 +922,85 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="getcountbyfilter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Count<wbr>ByFilter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Count<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#getcountbyfilter">getCountByFilter</a></p>
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:454</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets a number of data items retrieved by a given filter.</p>
+								</div>
+								<p>This method shall be called by a public getCountByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) transaction id to trace execution through call chain.</p>
+									</div>
+								</li>
+								<li>
+									<h5>filter: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) a filter JSON object</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback function that receives a data page or error.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, count<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>count: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="getlistbyfilter" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>List<wbr>ByFilter</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>List<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, sort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, select<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#getlistbyfilter">getListByFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L220">persistence/IdentifiableMongoosePersistence.ts:220</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:486</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1014,7 +1078,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L250">persistence/IdentifiableMongoosePersistence.ts:250</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:163</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1078,7 +1142,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L265">persistence/IdentifiableMongoosePersistence.ts:265</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:178</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1132,17 +1196,18 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="getonerandom" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>One<wbr>Random</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>One<wbr>Random<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#getonerandom">getOneRandom</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L285">persistence/IdentifiableMongoosePersistence.ts:285</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:519</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1198,17 +1263,18 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="getpagebyfilter" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Page<wbr>ByFilter</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Page<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, paging<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PagingParams</span>, sort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, select<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#getpagebyfilter">getPageByFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L163">persistence/IdentifiableMongoosePersistence.ts:163</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:400</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1293,7 +1359,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#isopen">isOpen</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L213">persistence/MongoosePersistence.ts:213</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:250</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1317,7 +1383,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#open">open</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L247">persistence/MongoosePersistence.ts:247</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:260</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1372,7 +1438,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L341">persistence/IdentifiableMongoosePersistence.ts:341</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:218</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1435,7 +1501,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#setreferences">setReferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/MongoosePersistence.ts#L181">persistence/MongoosePersistence.ts:181</a></li>
+									<li>Defined in persistence/MongoosePersistence.ts:188</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1456,6 +1522,29 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="unsetreferences" class="tsd-anchor"></a>
+					<h3>unset<wbr>References</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">unset<wbr>References<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="persistence.mongoosepersistence.html">MongoosePersistence</a>.<a href="persistence.mongoosepersistence.html#unsetreferences">unsetReferences</a></p>
+								<ul>
+									<li>Defined in persistence/MongoosePersistence.ts:207</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unsets (clears) previously set references to dependent components.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
@@ -1466,7 +1555,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L379">persistence/IdentifiableMongoosePersistence.ts:379</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:256</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1527,7 +1616,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongoose-node/blob/db89deb/src/persistence/IdentifiableMongoosePersistence.ts#L410">persistence/IdentifiableMongoosePersistence.ts:410</a></li>
+									<li>Defined in persistence/IdentifiableMongoosePersistence.ts:287</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1593,6 +1682,9 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/build.html">build</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/connect.html">connect</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -1608,7 +1700,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="persistence.identifiablemongoosepersistence.html" class="tsd-kind-icon">Identifiable<wbr>Mongo<wbr>DbPersistence</a>
+						<a href="persistence.identifiablemongoosepersistence.html" class="tsd-kind-icon">Identifiable<wbr>Mongoose<wbr>Persistence</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="persistence.identifiablemongoosepersistence.html#constructor" class="tsd-kind-icon">constructor</a>
@@ -1620,22 +1712,19 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 								<a href="persistence.identifiablemongoosepersistence.html#_connection" class="tsd-kind-icon">_connection</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="persistence.identifiablemongoosepersistence.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a>
+								<a href="persistence.identifiablemongoosepersistence.html#_database" class="tsd-kind-icon">_database</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="persistence.identifiablemongoosepersistence.html#_database" class="tsd-kind-icon">_database</a>
+								<a href="persistence.identifiablemongoosepersistence.html#_dependencyresolver" class="tsd-kind-icon">_dependency<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#_logger" class="tsd-kind-icon">_logger</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#_maxpagesize" class="tsd-kind-icon">_max<wbr>Page<wbr>Size</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#_model" class="tsd-kind-icon">_model</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="persistence.identifiablemongoosepersistence.html#_options" class="tsd-kind-icon">_options</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#_schema" class="tsd-kind-icon">_schema</a>
@@ -1658,10 +1747,10 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#converttopublic" class="tsd-kind-icon">convert<wbr>ToPublic</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="persistence.identifiablemongoosepersistence.html#create" class="tsd-kind-icon">create</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="persistence.identifiablemongoosepersistence.html#deletebyfilter" class="tsd-kind-icon">delete<wbr>ByFilter</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1670,7 +1759,10 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistence.identifiablemongoosepersistence.html#deletebyids" class="tsd-kind-icon">delete<wbr>ByIds</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="persistence.identifiablemongoosepersistence.html#getcountbyfilter" class="tsd-kind-icon">get<wbr>Count<wbr>ByFilter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#getlistbyfilter" class="tsd-kind-icon">get<wbr>List<wbr>ByFilter</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1679,10 +1771,10 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistence.identifiablemongoosepersistence.html#getonebyid" class="tsd-kind-icon">get<wbr>One<wbr>ById</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#getonerandom" class="tsd-kind-icon">get<wbr>One<wbr>Random</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="persistence.identifiablemongoosepersistence.html#getpagebyfilter" class="tsd-kind-icon">get<wbr>Page<wbr>ByFilter</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -1697,6 +1789,9 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="persistence.identifiablemongoosepersistence.html#setreferences" class="tsd-kind-icon">set<wbr>References</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="persistence.identifiablemongoosepersistence.html#unsetreferences" class="tsd-kind-icon">unset<wbr>References</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistence.identifiablemongoosepersistence.html#update" class="tsd-kind-icon">update</a>
 							</li>
@@ -1708,7 +1803,10 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="persistence.mongoosepersistence.html" class="tsd-kind-icon">Mongo<wbr>DbPersistence</a>
+						<a href="persistence.mongooseconnection.html" class="tsd-kind-icon">Mongoose<wbr>Connection</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="persistence.mongoosepersistence.html" class="tsd-kind-icon">Mongoose<wbr>Persistence</a>
 					</li>
 				</ul>
 			</nav>
