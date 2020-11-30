@@ -1,10 +1,10 @@
-# <img src="https://github.com/pip-services/pip-services/raw/master/design/Logo.png" alt="Pip.Services Logo" style="max-width:30%"> <br/> Pip.Services MongoDB components for Node.js
+# <img src="https://github.com/pip-services/pip-services/raw/master/design/Logo.png" alt="Pip.Services Logo" style="max-width:30%"> <br/> Mongoose components for Node.js
 
 This module is a part of the [Pip.Services](http://pipservices.org) polyglot microservices toolkit.
 
 The Mongoose module simplifies working with Mongo databases using ODM and contains everything you need to get started with MongoDB.
 
-This module contains the following packages:
+The module contains the following packages:
  
 - **Build** - contains a factory for creating MongoDB persistence components.
 - **Connect** - instruments for configuring connections to the database. The component receives a set of configuration parameters and uses them to generate all necessary database connection parameters.
