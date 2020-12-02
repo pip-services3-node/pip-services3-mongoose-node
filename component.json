@@ -1,6 +1,6 @@
 {
-    "name": "pip-services-mongoose",
+    "name": "pip-services3-mongoose-node",
     "registry": "pipdevs",
     "version": "3.3.0",
-    "build": "0"
+    "build": 0
 }
