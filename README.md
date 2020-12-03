@@ -108,8 +108,6 @@ export class MyMongoosePersistence extends IdentifableMongoosePersistence {
   private composeFilter(filter: FilterParams): any {
     filter = filter || new FilterParams();
     
-    let id = filter.getAsNullableString("id");
-
     let criteria = [];
 
     let id = filter.getAsNullableString('id');
@@ -137,9 +135,9 @@ export class MyMongoosePersistence extends IdentifableMongoosePersistence {
   public getOneByKey(correlationId: string, key: string,
     callback: (err: any, item: MyObject) => void): void {
 
-    let filter = { key: key };
+    let criteria = { key: key };
 
-    this._model.findOne(filter, (err, item) => {
+    this._model.findOne(criteria, (err, item) => {
       if (!err)
         this._logger.trace(correlationId, "Retrieved from %s by key = %s", this._collection, key);
 
